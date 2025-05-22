@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מיקום גיאוגרפי</title>
+</head>
+<body>
+    <h1>החזרת מיקום גיאוגרפי</h1>
+    <button onclick="getLocation()">קבל מיקום</button>
+    <p id="location"></p>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("location").innerHTML = "הדפדפן לא תומך בהגדרת מיקום";
+            }
+        }
+
+        function showPosition(position) {
+            var x = position.coords.latitude;
+            var y = position.coords.longitude;
+            document.getElementById("location").innerHTML = "הקואורדינטות שלך הם: " + "Latitude: " + x + ", Longitude: " + y;
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("location").innerHTML = "המשתמש סירב למתן גישה למיקום.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("location").innerHTML = "לא ניתן לאתר את המיקום.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("location").innerHTML = "הבקשה למיקום לא הושלמה בזמן.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("location").innerHTML = "שגיאה לא ידועה.";
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
